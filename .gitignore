@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# 环境配置与爬虫 Cookie（.env.example 需提交，不忽略）
+backend/.env
+backend/.crawler_cookie
+
+# 数据库（本地 SQLite 不提交）
+*.db
+backend/instance/
+
+# 前端依赖与构建产物
+node_modules/
+frontend/dist/
+frontend/.env.local
+.vite-check/
+
+# 日志
+*.log
+
+# 编辑器与操作系统文件
+.idea/
+.vscode/
+desktop.ini
+.DS_Store
+Thumbs.db
