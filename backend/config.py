@@ -12,7 +12,7 @@ class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-change-me")
     _database_url = os.getenv(
         "DATABASE_URL",
-        "mysql+pymysql://root:root@127.0.0.1:3306/house_demo?charset=utf8mb4",
+        "sqlite:///./house_demo_nc.db",
     )
     if _database_url.startswith("sqlite:///./"):
         _db_file = _database_url.replace("sqlite:///./", "", 1)

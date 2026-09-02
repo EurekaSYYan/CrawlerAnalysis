@@ -81,14 +81,18 @@
 
 ### 第 1 步：启动后端
 
+> 提示：仓库已内置示例数据库 `backend/instance/house_demo_nc.db`（含 756 条真实挂牌与演示账号），
+> 下面的 `copy .env.example .env`、`init-db`、`seed-users` 均可跳过（不配置 `.env` 时默认使用内置 SQLite），
+> 安装依赖后直接执行最后的 `flask --app app run` 即可。
+
 ```bash
 cd backend
 python -m venv .venv
 .venv\Scripts\activate        # Windows；macOS/Linux：source .venv/bin/activate
 pip install -r requirements.txt
-copy .env.example .env        # Windows；macOS/Linux：cp .env.example .env
-flask --app app init-db       # 初始化数据库表
-flask --app app seed-users    # 创建演示账号
+copy .env.example .env        # 可选；不配置则默认使用内置 SQLite
+flask --app app init-db       # 可选；示例库已建表，重复执行无副作用
+flask --app app seed-users    # 可选；示例库已含 admin/demo 账号
 flask --app app run           # 启动服务：http://127.0.0.1:5000
 ```
 

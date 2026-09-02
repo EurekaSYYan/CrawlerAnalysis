@@ -7,9 +7,10 @@ __pycache__/
 backend/.env
 backend/.crawler_cookie
 
-# 数据库（本地 SQLite 不提交）
-*.db
-backend/instance/
+# SQLite 运行时临时文件（示例数据库 house_demo_nc.db 需提交，不忽略）
+*.db-journal
+*.db-wal
+*.db-shm
 
 # 前端依赖与构建产物
 node_modules/
