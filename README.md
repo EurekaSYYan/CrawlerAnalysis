@@ -118,6 +118,7 @@ npm run dev                   # 启动开发服务器：http://localhost:5173
 - **前端详细讲解**（技术构成、文件职责、实现原理、改功能指南）：[FRONTEND.md](FRONTEND.md)
 - **后端详细讲解**（技术构成、文件职责、爬虫/分析原理、改功能指南）：[BACKEND.md](BACKEND.md)
 - **爬虫与数据入库详解**（相关文件、抓取/清洗流程、存储位置、入库逻辑）：[CRAWLER.md](CRAWLER.md)
+- **数据库存储说明**（SQLite 与 MySQL 的区别、数据如何存储与连接前后端）：[DATABASE.md](DATABASE.md)
 - 前端快速参考：[frontend/README.md](frontend/README.md)
 - 后端快速参考（接口、启动、测试）：[backend/README.md](backend/README.md)
 
