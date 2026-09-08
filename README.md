@@ -1,3 +1,143 @@
+# Nanchang Second-hand Housing Data Crawling & Analysis Project
+
+A full-stack data workbench for regular users and administrators: it automatically crawls real second-hand house listings from Lianjia Nanchang, cleans and stores them in a database, and turns raw data into actionable insights through a market dashboard, listing filters, analytics charts, and an admin console.
+
+## About the Project
+
+The platform is built around a complete data pipeline:
+
+```text
+Lianjia public pages → Crawler → Data cleaning → Database → REST API → Frontend visualization
+```
+
+- **Real data**: the bundled database contains **756 real Lianjia Nanchang listings** (every `source_url` points to an actual Lianjia detail page).
+- **Dual-role system**: regular users browse market trends, filter and favorite listings; administrators manage users and listings and trigger crawls.
+- **Out of the box**: demo accounts are pre-seeded and an example database ships with the repo, so the app runs right after installing dependencies.
+
+## Features
+
+- **Data dashboard**: regular users see listing scale, average prices by district and hot listings; administrators see system metrics and crawl status.
+- **Listing hall**: multi-condition filtering by price, area, room plan and district, with favorites and pagination.
+- **Listing detail**: real listing fields with a favorite action.
+- **Data analytics**: charts for average price by district, room-type share, total-price bins, area × total-price scatter, listing lifecycle, floor-level analysis, plus an attention-vs-price correlation insight.
+- **Profile center**: edit your profile, manage favorites, and re-login.
+- **Admin console**: manage user roles / enable or disable accounts, CRUD listings, and trigger a one-click Lianjia crawl.
+
+## Tech Stack
+
+| End | Technology | Purpose |
+| --- | --- | --- |
+| Frontend | Vite 6 + React 18 | Build tool & UI framework |
+| Frontend | React Router 6 | Client-side routing |
+| Frontend | Tailwind CSS v4 | Atomic CSS & theme variables |
+| Frontend | ECharts 5 | Data visualization charts |
+| Backend | Python 3.12 + Flask 3 | REST API service |
+| Backend | Flask-SQLAlchemy 3 | ORM database access |
+| Backend | pandas | Data cleaning & outlier filtering |
+| Backend | requests + BeautifulSoup | Lianjia page fetching & parsing |
+| Database | SQLite (default) / MySQL (production) | Data storage |
+| Auth | itsdangerous + werkzeug | Token signing & password hashing |
+
+## Project Structure
+
+```text
+.
+├── README.md              # Project overview (this file)
+├── AGENTS.md              # Conventions for AI developers working on the project
+├── .gitignore
+├── frontend/              # Frontend: Vite + React SPA
+│   ├── README.md          # Frontend documentation
+│   ├── src/               # Frontend source code
+│   │   ├── api/           # API request wrapper (auto-attaches the token)
+│   │   ├── auth/          # Login state management
+│   │   ├── components/    # Shared components & chart wrappers
+│   │   ├── styles/        # Global styles & light/dark theme variables
+│   │   ├── theme/         # Theme switching context
+│   │   ├── utils/         # Formatting helpers
+│   │   └── views/         # Page views (login, dashboard, houses, analytics, profile, console)
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
+└── backend/               # Backend: Flask REST API
+    ├── README.md          # Backend documentation
+    ├── app.py             # App entry & CLI commands
+    ├── config.py          # Database & runtime configuration
+    ├── models.py          # ORM data models
+    ├── utils.py           # Token / auth / serialization helpers
+    ├── seed_users.py      # Built-in demo accounts
+    ├── requirements.txt
+    ├── routes/            # API routes (auth / houses / dashboard / analytics / admin)
+    ├── crawler/           # Lianjia crawler & data cleaning
+    ├── tests/             # Backend unit tests
+    └── instance/          # SQLite database (demo database is bundled with the repo)
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.12+
+- Node.js 18+
+
+### Step 1: Start the Backend
+
+> Note: an example database `backend/instance/house_demo_nc.db` (756 real listings + demo accounts)
+> is bundled with the repo. The optional steps below (`copy .env.example .env`, `init-db`,
+> `seed-users`) can be skipped — when no `.env` is configured the app falls back to the bundled
+> SQLite database. Just run the final `flask --app app run` after installing dependencies.
+
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate      # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+cp .env.example .env           # optional; the bundled SQLite is used by default
+flask --app app init-db        # optional; tables already exist in the demo DB
+flask --app app seed-users     # optional; admin/demo accounts already exist
+flask --app app run            # start the service: http://127.0.0.1:5000
+```
+
+### Step 2: Start the Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev                    # start the dev server: http://localhost:5173
+```
+
+Open `http://localhost:5173` in your browser. In dev mode the frontend proxies `/api` requests to the backend automatically.
+
+### Demo Accounts
+
+| Role | Username | Password |
+| --- | --- | --- |
+| Administrator | admin | admin123 |
+| Regular user | demo | demo123 |
+
+## Documentation
+
+- Frontend deep dive (architecture, file responsibilities, implementation notes): [FRONTEND.md](FRONTEND.md) *(Chinese)*
+- Backend deep dive (architecture, file responsibilities, crawler/analytics internals): [BACKEND.md](BACKEND.md) *(Chinese)*
+- Crawler & data ingestion walkthrough (files, fetch/cleaning flow, storage, DB write logic): [CRAWLER.md](CRAWLER.md) *(Chinese)*
+- Database storage guide (SQLite vs MySQL, how data is stored and served to both ends): [DATABASE.md](DATABASE.md) *(Chinese)*
+- Frontend quick reference: [frontend/README.md](frontend/README.md) *(Chinese)*
+- Backend quick reference (endpoints, startup, testing): [backend/README.md](backend/README.md) *(Chinese)*
+
+## Tests
+
+```bash
+cd backend
+python -m unittest discover -s tests -v
+```
+
+## Production Notes
+
+- Switch to MySQL by editing `DATABASE_URL` in `backend/.env`.
+- Set `SECRET_KEY` to a strong random value.
+- Frontend production build: `cd frontend && npm run build`, output goes to `frontend/dist/`.
+
+
+
 # 二手房数据爬取分析项目
 
 一个面向普通用户与管理员的全栈数据工作台：自动爬取链家南昌站真实二手房挂牌，清洗入库后，通过数据大盘、房源筛选、数据分析图表与后台管理，把“数据”变成“可用的信息”。
